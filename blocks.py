@@ -62,18 +62,33 @@ def perms(perm=None):
 PERMS = perms()
 assert len(set(PERMS)) == 24
 
-for i, p in enumerate(PERMS):
-    print i, ':', p
-
 # These are the actual blocks we have:
 BLOCKS = 'bgyyyr', 'bgyrry', 'bgygbr', 'bggryr'
 
-def apply(perm, block):
-    return ''.join(block[p] for p in perm)
-
 def permute_blocks(blocks, perms):
-    return tuple(tuple(apply(p, b) for p in perms) for b in blocks)
+    return [[''.join(b[i] for i in p) for p in perms] for b in blocks]
 
-PERMUTED_BLOCKS = permute_blocks(BLOCKS, PERMS)
+BLOCK_PERMUTATIONS = permute_blocks(BLOCKS, PERMS)
 
-# assert len(set(PERMUTED_BLOCKS)) == len(PERMUTED_BLOCKS)
+def find(block_perms=None):
+    block_perms = block_perms or BLOCK_PERMUTATIONS
+    results = []
+    count = [0]
+
+    def add_block(i, blocks, ff, uu, bb, aa):
+        for perm in block_perms[i]:
+            count[0] += 1
+            if not (count[0] % 1000):
+                print 'count', count
+            f, u, _, a, _, b = perm
+            if f in ff or u in uu or b in bb or a in aa:
+                continue
+            more = blocks + [perm]
+            if i < len(block_perms) - 1:
+                add_block(i + 1, more, f + ff, u + uu, b + bb, a + aa)
+            else:
+                print 'success!', more, f, u, b, a
+                results.append(more)
+
+    add_block(0, [], '', '', '', '')
+    return results
