@@ -39,18 +39,21 @@ Rotating Side 0 "to the right" - permuting (0, 2, 5, 4)
 
 """
 
-def twist(f, u, r, a, l, b):
-    return f, r, a, l, u, b
+import itertools
 
-def up(f, u, r, a, l, b):
-    return u, b, r, f, l, a
 
-def right(f, u, r, a, l, b):
-    return l, u, f, a, b, r
+def perms():
+    def twist(f, u, r, a, l, b):
+        return f, r, a, l, u, b
 
-def perms(perm=None):
+    def up(f, u, r, a, l, b):
+        return u, b, r, f, l, a
+
+    def right(f, u, r, a, l, b):
+        return l, u, f, a, b, r
+
     result = []
-    perm = tuple(perm or range(6))
+    perm = tuple(range(6))
     for p1 in up, right, up, right, up, right:
         for p2 in twist, twist, twist, twist:
             result.append(perm)
@@ -62,33 +65,23 @@ def perms(perm=None):
 PERMS = perms()
 assert len(set(PERMS)) == 24
 
-# These are the actual blocks we have:
+
 BLOCKS = 'bgyyyr', 'bgyrry', 'bgygbr', 'bggryr'
 
-def permute_blocks(blocks, perms):
-    return [[''.join(b[i] for i in p) for p in perms] for b in blocks]
 
-BLOCK_PERMUTATIONS = permute_blocks(BLOCKS, PERMS)
+def permute_block(block, perms):
+    return [''.join(block[i] for i in perm) for perm in perms]
 
-def find(block_perms=None):
-    block_perms = block_perms or BLOCK_PERMUTATIONS
-    results = []
-    count = [0]
+BLOCK_PERMUTATIONS = [permute_block(b, PERMS) for b in BLOCKS]
+assert all(len(p) == 24 for p in BLOCK_PERMUTATIONS)
 
-    def add_block(i, blocks, ff, uu, bb, aa):
-        for perm in block_perms[i]:
-            count[0] += 1
-            if not (count[0] % 1000):
-                print 'count', count
-            f, u, _, a, _, b = perm
-            if f in ff or u in uu or b in bb or a in aa:
-                continue
-            more = blocks + [perm]
-            if i < len(block_perms) - 1:
-                add_block(i + 1, more, f + ff, u + uu, b + bb, a + aa)
-            else:
-                print 'success!', more, f, u, b, a
-                results.append(more)
 
-    add_block(0, [], '', '', '', '')
-    return results
+def find():
+    for perm in itertools.product(*BLOCK_PERMUTATIONS):
+        f, u, _, a, _, b = [set(faces) == set('bgry') for faces in zip(*perm)]
+        if f and u and a and b:
+            print perm
+
+
+if __name__ == '__main__':
+    find()
