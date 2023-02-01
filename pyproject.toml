@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "blocks"
 version = "1.0.0"
-description = "⬜🟩🟦🟥 Solve a block puzzle I found in Utrecht Lunetten 🟥🟦🟩⬜"
+description = "⬜🟩🟦🟥 Solve a block puzzle 🟥🟦🟩⬜"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
 readme = "README.md"
