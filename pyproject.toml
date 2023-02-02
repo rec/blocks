@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "blocks"
-version = "1.0.0"
+version = "1.0.1"
 description = "⬜🟩🟦🟥 Solve a block puzzle 🟥🟦🟩⬜"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
