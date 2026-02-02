@@ -30,6 +30,7 @@ In the frame, sides 2 and 4 are not visible.  We want to arrange the
 four cubes we have so that all four colors appear on each side 0, 1, 3, 5.
 """
 
+
 def rotations():
     """
     Return the rotational symmetry group of a cube.
@@ -64,6 +65,7 @@ def rotations():
 
     return tuple(enumerate())
 
+
 ROTATIONS = rotations()
 assert len(set(ROTATIONS)) == 24
 
@@ -77,6 +79,7 @@ def rotate_blocks(blocks, rotations):
         return tuple(''.join(block[i] for i in rot) for rot in rotations)
 
     return tuple(rotate_block(b) for b in blocks)
+
 
 BLOCK_ROTATIONS = rotate_blocks(BLOCKS, ROTATIONS)
 
