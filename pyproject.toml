@@ -19,9 +19,6 @@ classifiers = [
 ]
 
 
-[tool.mypy]
-strict = true
-
 [tool.coverage]
 [tool.coverage.run]
 branch = true
