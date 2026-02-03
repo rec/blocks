@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
 
 """
 I have these four blocks each painted with four colors
@@ -46,14 +45,14 @@ def rotations():
         Rotating Side 0 "right" - permuting (0, 2, 5, 4)
     """
 
-    def twist(f, u, r, a, l, b):
-        return f, r, a, l, u, b
+    def twist(f, u, r, a, L, b):
+        return f, r, a, L, u, b
 
-    def up(f, u, r, a, l, b):
-        return u, b, r, f, l, a
+    def up(f, u, r, a, L, b):
+        return u, b, r, f, L, a
 
-    def right(f, u, r, a, l, b):
-        return l, u, f, a, b, r
+    def right(f, u, r, a, L, b):
+        return L, u, f, a, b, r
 
     def enumerate():
         perm = tuple(range(6))
